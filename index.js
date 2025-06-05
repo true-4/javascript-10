@@ -1,4 +1,4 @@
-// 2
+// 2 Деструктуризация
 
 // Задача: Вытяни имя
 //  Дан объект:
@@ -74,3 +74,45 @@ console.log(email)
 const users = [ { name9: 'Ира', age: 20 }, { name9: 'Олег', age: 30 }, { name9: 'Женя', age: 25 } ]
 const usersAge = users.filter(({age}) => age > 21).map(({name9}) => name9)
 console.log(usersAge)
+
+// 3 Call, Apply, Bind
+
+// Есть объект user с методом sayHello. Скопируй метод в переменную и вызови его так, чтобы this остался равен user.
+const userHi = {
+  nameUs: 'Alex',
+  age: 19,
+  sayHello() { // метод
+    console.log(`Привет ${this.nameUs}`)
+  }
+}
+
+const copyHi = userHi.sayHello // копирую метод в переменную
+
+copyHi.call(userHi) // вызываю метод объекта через копию
+
+// Есть функция greet(greeting), которая выводит "greeting, меня зовут this.name". Вызови её с помощью call так, чтобы this указывал на объект person с полем name: 'Анна'.
+function greet(greeting) {
+  console.log(`Меня зовут ${this.name}!`)
+}
+
+const person = {
+  name: 'Анна',
+}
+
+greet.call(person) // принимает аргументы как параметры
+
+// Повтори задачу 2, но используй apply вместо call.
+
+greet.apply(person) // принимает массив аргументов
+
+// Создай новую функцию sayHi, которая привязана к объекту person с полем name: 'Миша'. При вызове sayHi('Привет') должно выводиться "Привет, меня зовут Миша".
+function sayHi(hi) {
+  console.log(`${hi}, меня зовут ${this.name}`)
+}
+
+const person2 = {
+  name: 'Миша',
+}
+
+const hi = sayHi.bind(person2, 'Привет')
+hi()
