@@ -91,7 +91,7 @@ const copyHi = userHi.sayHello // копирую метод в переменн�
 copyHi.call(userHi) // вызываю метод объекта через копию
 
 // Есть функция greet(greeting), которая выводит "greeting, меня зовут this.name". Вызови её с помощью call так, чтобы this указывал на объект person с полем name: 'Анна'.
-function greet(greeting) {
+function greet() {
   console.log(`Меня зовут ${this.name}!`)
 }
 
@@ -109,10 +109,48 @@ greet.apply(person) // принимает массив аргументов
 function sayHi(hi) {
   console.log(`${hi}, меня зовут ${this.name}`)
 }
-
+// **
 const person2 = {
   name: 'Миша',
 }
 
-const hi = sayHi.bind(person2, 'Привет')
-hi()
+sayHi.bind(person2, 'Привет')()
+
+// Есть массив [1, 2, 3] и объект mathOps с методом sum, использующим this.reduce. Вызови метод так, чтобы он вернул сумму элементов массива, используя call.
+const arr = [1, 2, 3]
+const mathOps = {
+  sum() {
+    return this.reduce((acc, curr) => acc + curr, 0)
+  }
+}
+
+console.log(mathOps.sum.call(arr))
+
+// Почему следующий код выведет undefined? setTimeout(obj.say, 1000), если obj = { name: 'Лена', say() { console.log(this.name); } }. Исправь, чтобы выводилось "Лена".
+const obj = { 
+  name: 'Лена',
+  say() { 
+    console.log(this.name)
+  }
+}
+
+setTimeout(obj.say(obj), 1000)
+
+// Есть функция introduce(age, city), выводящая "Меня зовут this.name, мне age лет, я из city". Вызови её с помощью call и apply для двух разных объектов с именами.
+function introduce(age, city) {
+  return `Меня зовут ${this.name}, мне ${age} лет, я из ${city}`
+}
+
+const objFirst = { name: 'Alice', }
+const objSecond = { name: 'Vlad', }
+
+console.log(introduce.call(objFirst, 25, 'Москвы'))
+console.log(introduce.apply(objSecond, [20, 'Кишенёва']))
+
+// Напиши функцию multiply(a, b). Используя bind, создай новую функцию double, которая всегда умножает на 2. Пример: double(5) должно вернуть 10.
+function multiply(a, b) {
+  return a * b
+}
+
+const double = multiply.bind(null, 2) // TO DOO
+console.log(double(5))
