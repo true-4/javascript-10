@@ -154,3 +154,50 @@ function multiply(a, b) {
 
 const double = multiply.bind(null, 2) // TO DOO
 console.log(double(5))
+
+// 4 Рекурсия
+
+// Напиши функцию fibonacci(n), которая возвращает n-е число в последовательности Фибоначчи
+function fibonacci(n) {
+  if (n <= 1) {
+    return n
+  } else {
+    return fibonacci(n - 1) + fibonacci(n - 2)
+  }
+}
+
+console.log(fibonacci(0))
+console.log(fibonacci(1))
+console.log(fibonacci(5))
+console.log(fibonacci(10))
+
+
+// Дополнительное задание
+// Сначала реализуй с рекурсией
+// Затем попробуй сделать то же самое с циклом для улучшения производительности
+
+// TO DOO
+// function fibonacci2(n) {
+//   let count = []
+//   for (const i = 0; i < n.length; i++) {
+//     console.log(count = count + i)
+//   }
+//   return count
+// }
+
+// console.log(fibonacci2(10)) // 55
+
+// Напиши функцию, которая принимает число n и возвращает сумму всех чисел от 1 до n, используя рекурсию.
+//  Пример: sumTo(5) должно вернуть 15.
+
+function sumTo(n) {
+
+  for (let i = 0; i < n; i++) {
+    if (n === 1) { // указываю условия завершения цикла 
+      return 1
+    }
+  }
+  return n + sumTo(n - 1) // складываю 1 со значением введённом в sumTo и отнимаю 1. будет выполняться пока не достигнет условя выхода тоеть 1
+}
+// 1 + 2 + 3 + 4 + 5
+console.log(sumTo(5))
