@@ -71,8 +71,8 @@ console.log(email)
 //  const users = [ { name: 'Ира', age: 20 }, { name: 'Олег', age: 30 }, { name: 'Женя', age: 25 } ];
 // Твоя задача: Составь новый массив с именами тех, кто старше 21, используя деструктуризацию.
 
-const users = [ { name9: 'Ира', age: 20 }, { name9: 'Олег', age: 30 }, { name9: 'Женя', age: 25 } ]
-const usersAge = users.filter(({age}) => age > 21).map(({name9}) => name9)
+const users = [ { name: 'Ира', age: 20 }, { name: 'Олег', age: 30 }, { name: 'Женя', age: 25 } ]
+const usersAge = users.filter(({age}) => age > 21).map(({name}) => name)
 console.log(usersAge)
 
 // 3 Call, Apply, Bind
@@ -133,8 +133,7 @@ const obj = {
     console.log(this.name)
   }
 }
-
-setTimeout(obj.say(obj), 1000)
+setTimeout(obj.say.bind(obj), 1000)
 
 // Есть функция introduce(age, city), выводящая "Меня зовут this.name, мне age лет, я из city". Вызови её с помощью call и apply для двух разных объектов с именами.
 function introduce(age, city) {
@@ -152,7 +151,7 @@ function multiply(a, b) {
   return a * b
 }
 
-const double = multiply.bind(null, 2) // TO DOO
+const double = multiply.bind(null, 2)
 console.log(double(5))
 
 // 4 Рекурсия
@@ -176,16 +175,22 @@ console.log(fibonacci(10))
 // Сначала реализуй с рекурсией
 // Затем попробуй сделать то же самое с циклом для улучшения производительности
 
-// TO DOO
-// function fibonacci2(n) {
-//   let count = []
-//   for (const i = 0; i < n.length; i++) {
-//     console.log(count = count + i)
-//   }
-//   return count
-// }
+// НЕ РЕШИЛ ЗАДАЧУ САМ НИЧЕГО НЕ ПОНИМАЮ ПРАКТИЧЕСКИ
+function fibonacci2(n) {
+  if (n === 0) return 0 // Обработка нулевого случая
+  if (n === 1) return 1 // Обработка единичного случая
+  let a = 0, b = 1; // Начальные значения последовательности
+  let sum;
 
-// console.log(fibonacci2(10)) // 55
+  for (let i = 2; i <= n; i++) { // Цикл от второго до n-го элемента
+    sum = a + b // Следующее число — сумма двух предыдущих
+    a = b // Смещаемся вперед: a становится предыдущим b
+    b = sum // b становится новым числом последовательности
+  }
+  return b // После цикла b содержит n-е число Фибоначчи
+}
+
+console.log(fibonacci2(10)) // 55
 
 // Напиши функцию, которая принимает число n и возвращает сумму всех чисел от 1 до n, используя рекурсию.
 //  Пример: sumTo(5) должно вернуть 15.
@@ -220,13 +225,15 @@ console.log(factorial(4))
 // Реализуй функцию pow(x, n), которая возвращает x в степени n, используя рекурсию.
 //  Пример: pow(2, 3) должно вернуть 8.
 
+// НЕ РЕШИЛ ЗАДАЧУ САM
 function pow(x, n) {
-  let result = 1
-  
-  for(let i = 0; i < n; i++) { // исрльзую цикл для степени тоеть n 
-    result *= x // для каждой итерации n результат умножаю и присваиваю в х который записывается в счётчик result
+  if (n === 0) {
+    return 1 // Любое число в степени 0 равно 1
+  } else if (n < 0) {
+    return 1 / pow(x, -n) // Для отрицательных степеней возвращаем обратное число
+  } else {
+    return x * pow(x, n - 1) // Для положительных степеней: x * pow(x, n-1)
   }
-  return result
 }
 // 2 * 2 * 2 = 8 
 console.log(pow(2, 3))
@@ -234,31 +241,19 @@ console.log(pow(2, 3))
 // Напиши функцию reverseString(str), которая возвращает строку в обратном порядке, используя рекурсию.
 // Пример: reverseString('cat') → 'tac'.
 
-// ЭТУ ЗАДАЧУ РЕШИЛ ПОЛНОСТЬЮ САМ БЕЗ ЛЮБЫХ ПОДСКАЗОК И НАШИ ВИДЕО ИЗ ЗАНЯТИЙ 
-// ЭТУ ЗАДАЧУ РЕШИЛ ПОЛНОСТЬЮ САМ БЕЗ ЛЮБЫХ ПОДСКАЗОК И НАШИ ВИДЕО ИЗ ЗАНЯТИЙ 
-// ЭТУ ЗАДАЧУ РЕШИЛ ПОЛНОСТЬЮ САМ БЕЗ ЛЮБЫХ ПОДСКАЗОК И НАШИ ВИДЕО ИЗ ЗАНЯТИЙ 
-
 function reverseString(str) {
-  let newStr = ''
-  for (let i = str.length - 1; i >= 0; i--) {
-    newStr = newStr + str[i]
-  }
-  return newStr
+  if (str <= 1) return str
+  return str[str.length - 1] + reverseString(str.slice(0, -1))
 }
 
 console.log(reverseString('cat'))
 
-// ЭТУ ЗАДАЧУ РЕШИЛ ПОЛНОСТЬЮ САМ БЕЗ ЛЮБЫХ ПОДСКАЗОК И НАШИ ВИДЕО ИЗ ЗАНЯТИЙ 
-// ЭТУ ЗАДАЧУ РЕШИЛ ПОЛНОСТЬЮ САМ БЕЗ ЛЮБЫХ ПОДСКАЗОК И НАШИ ВИДЕО ИЗ ЗАНЯТИЙ 
-// ЭТУ ЗАДАЧУ РЕШИЛ ПОЛНОСТЬЮ САМ БЕЗ ЛЮБЫХ ПОДСКАЗОК И НАШИ ВИДЕО ИЗ ЗАНЯТИЙ 
-
 // Напиши рекурсивную функцию flatten, которая превращает вложенный массив в одномерный. Пример: flatten([1, [2, [3, 4]], 5]) → [1, 2, 3, 4, 5]
-// TO DOO частично решил сам
 function flatten(arr) {
   let res = []
 
   for (let el of arr) {
-    if (Array.isArray(el)) { // здесь не сам
+    if (Array.isArray(el)) { // проверяю что елемент являетсь массивом
       res = res.concat(flatten(el));
     } else {
       res.push(el)
